@@ -163,7 +163,7 @@ export function formatDateTime(iso: string | null | undefined): string {
   }
 }
 
-export function initialsOf(user: { email?: string; displayName?: string; display_name?: string } | null | undefined): string {
+export function initialsOf(user: { email?: string | null; displayName?: string | null; display_name?: string | null } | null | undefined): string {
   if (!user) return "?";
   const name = user.displayName || user.display_name || user.email || "?";
   const parts = name.split(/[\s._-]+/).filter(Boolean);

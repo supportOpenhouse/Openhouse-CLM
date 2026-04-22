@@ -125,7 +125,7 @@ export async function POST(request: Request) {
       margin: { top: "22mm", right: "20mm", bottom: "22mm", left: "20mm" },
     });
     await browser.close();
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(Buffer.from(pdfBuffer), {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",

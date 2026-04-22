@@ -14,9 +14,10 @@ export async function PATCH(request: Request, { params }: { params: { userId: st
 
   // If demoting an admin, ensure at least one admin remains
   if (role === "editor") {
-    const [{ count }] = await db.execute<{ count: number }>(
+    const result = await db.execute<{ count: number }>(
       sql`select count(*)::int as count from users where role = 'admin' and id != ${params.userId}`
     );
+    const count = result.rows[0]?.count ?? 0;
     if (count === 0) {
       return NextResponse.json({ error: "Cannot demote the last admin" }, { status: 400 });
     }

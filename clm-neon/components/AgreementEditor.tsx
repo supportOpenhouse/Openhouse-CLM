@@ -217,7 +217,7 @@ export default function AgreementEditor({
     let cancelled = false;
     async function beat() {
       if (cancelled) return;
-      await heartbeatPresence(agreement.id, user.email);
+      await heartbeatPresence(agreement.id);
       const list = await fetchPresence(agreement.id, PRESENCE_STALE_MS);
       if (!cancelled) setPresenceList(list);
     }
@@ -226,7 +226,7 @@ export default function AgreementEditor({
     return () => {
       cancelled = true;
       clearInterval(t);
-      removePresence(agreement.id, user.email).catch(() => {});
+      removePresence(agreement.id).catch(() => {});
     };
   }, [agreement.id, user.email]);
 

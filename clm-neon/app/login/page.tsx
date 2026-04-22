@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 
-export default function LoginPage() {
+function LoginForm() {
   const params = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -93,5 +93,13 @@ export default function LoginPage() {
         .login-note { margin-top: 18px; padding-top: 18px; border-top: 1px solid #e7e0d0; font-size: 11px; color: #78716c; line-height: 1.6; }
       `}</style>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div style={{ minHeight: "100vh", background: "#f5f1e8" }} />}>
+      <LoginForm />
+    </Suspense>
   );
 }

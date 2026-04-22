@@ -78,9 +78,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     // First user to sign in becomes admin; update last_login on each visit
     async signIn({ user }) {
       if (!user.id || !user.email) return;
-      const [{ admin_count }] = await db.execute<{ admin_count: number }>(
+      const adminCountResult = await db.execute<{ admin_count: number }>(
         sql`select count(*)::int as admin_count from users where role = 'admin'`
       );
+      const admin_count = adminCountResult.rows[0]?.admin_count ?? 0;
       const patch: any = { lastLogin: new Date() };
       if (admin_count === 0) patch.role = "admin";
       // Derive a display name if missing
