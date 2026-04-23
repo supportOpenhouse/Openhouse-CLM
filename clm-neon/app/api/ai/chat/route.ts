@@ -52,7 +52,7 @@ export async function POST(request: Request) {
 
   try {
     const response = await client.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4-5",
       max_tokens: 1000,
       system: CHAT_SYSTEM,
       messages: [{ role: "user", content: context }],
